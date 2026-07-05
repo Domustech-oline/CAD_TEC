@@ -1,65 +1,52 @@
-const CACHE="solarflow-cadtec-v4"
+const CACHE = "solarflow-cadtec-v5";
 
-const FILES=[
-"./",
-"./index.html",
-"./style.css",
-"./app.js",
-"./manifest.webmanifest",
-"./logo.png",
-"./icon-192.png",
-"./icon-512.png",
-"./icon-192-maskable.png",
-"./icon-512-maskable.png"
-]
+const FILES = [
+  "./",
+  "./index.html",
+  "./style.css",
+  "./app.js",
+  "./manifest.webmanifest",
+  "./logo.png",
+  "./icon-192.png",
+  "./icon-192-maskable.png",
+  "./icon-512.png",
+  "./icon-512-maskable.png"
+];
 
-self.addEventListener("install",e=>{
+self.addEventListener("install", (e) => {
+  self.skipWaiting();
 
-// Ativa a nova versão imediatamente, sem esperar todas as abas fecharem
-self.skipWaiting()
+  e.waitUntil(
+    caches.open(CACHE).then((cache) =>
+      Promise.all(
+        FILES.map((url) =>
+          cache.add(url).catch((err) => {
+            console.warn("Falha ao cachear:", url, err);
+          })
+        )
+      )
+    )
+  );
+});
 
-e.waitUntil(
+self.addEventListener("activate", (e) => {
+  e.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
 
-caches.open(CACHE).then(cache=>
+      await Promise.all(
+        keys
+          .filter((key) => key !== CACHE)
+          .map((key) => caches.delete(key))
+      );
 
-// cacheia cada arquivo individualmente: se um falhar, os outros continuam
-Promise.all(
-FILES.map(url=>cache.add(url).catch(err=>console.warn("Falha ao cachear",url,err)))
-)
+      await self.clients.claim();
+    })()
+  );
+});
 
-)
-
-)
-
-})
-
-self.addEventListener("activate",e=>{
-
-e.waitUntil(
-
-(async()=>{
-
-const keys=await caches.keys()
-
-await Promise.all(
-keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))
-)
-
-// assume o controle das páginas abertas imediatamente
-await self.clients.claim()
-
-})()
-
-)
-
-})
-
-self.addEventListener("fetch",e=>{
-
-e.respondWith(
-
-caches.match(e.request).then(res=>res||fetch(e.request))
-
-)
-
-})
+self.addEventListener("fetch", (e) => {
+  e.respondWith(
+    caches.match(e.request).then((response) => response || fetch(e.request))
+  );
+});
