@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>SolarFlow | Cadastro Técnico</title>
+
+<meta name="theme-color" content="#0D1B2A">
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+<div class="header-inner">
+
+<div class="logo-badge">
+<img src="icons/icon-192.png" alt="SolarFlow" class="logo-icon">
+</div>
+
+<div class="header-text">
+<h1>SolarFlow</h1>
+<p class="header-sub">Cadastro Técnico</p>
+<div class="header-meta">
+<span>📅 <span id="header-date">--/--/----</span></span>
+<span>🕐 <span id="header-time">--:--:--</span></span>
+</div>
+</div>
+
+</div>
+</header>
+
+<main>
+
+<section id="login-screen" class="screen active">
+
+<div class="card">
+
+<h2>Acesso</h2>
+
+<form id="login-form">
+
+<label>Código de acesso</label>
+<input
+type="password"
+id="access-code"
+placeholder="Digite o código"
+required
+>
+
+<button type="submit">Entrar</button>
+
+</form>
+
+<p id="login-error"></p>
+
+</div>
+
+</section>
+
+<section id="main-screen" class="screen">
+
+<div class="card">
+
+<div class="stepper">
+<div class="step active" id="stepper-1">
+<span class="step-circle">1</span>
+<span class="step-label">Dados do Projeto</span>
+</div>
+<div class="step-divider"></div>
+<div class="step" id="stepper-2">
+<span class="step-circle">2</span>
+<span class="step-label">Documentos</span>
+</div>
+</div>
+
+<form id="project-form">
+
+<div id="step-dados" class="step-panel active">
+
+<h3>Dados do Cliente</h3>
+
+<label>Nome do cliente</label>
+<input id="cliente" required>
+
+<label>Telefone</label>
+<input id="telefone" placeholder="(00) 00000-0000">
+
+<label>Email</label>
+<input id="email" type="email">
+
+<label>CPF</label>
+<input id="cpf" placeholder="000.000.000-00">
+
+<label>RG</label>
+<input id="rg">
+
+<h3>Equipamentos</h3>
+
+<div class="field-group">
+<h4>Inversor</h4>
+<div class="field-row">
+<div>
+<label>Modelo</label>
+<input id="inversor-modelo" placeholder="Ex: Growatt 5kW">
+</div>
+<div>
+<label>Quantidade</label>
+<input type="number" id="inversor-qtd" min="0">
+</div>
+</div>
+</div>
+
+<div class="field-group">
+<h4>Módulo</h4>
+<div class="field-row">
+<div>
+<label>Modelo</label>
+<input id="modulo-modelo" placeholder="Ex: Canadian 550W">
+</div>
+<div>
+<label>Quantidade</label>
+<input type="number" id="modulo-qtd" min="0">
+</div>
+</div>
+</div>
+
+<h3>Disjuntores</h3>
+
+<div class="field-group">
+<h4>Disjuntor do PDE</h4>
+<div class="field-row">
+<div>
+<label>Corrente (A)</label>
+<input type="number" id="disjuntor-pde-corrente" placeholder="Ex: 63">
+</div>
+<div>
+<label>Tipo</label>
+<select id="disjuntor-pde-tipo">
+<option>Monofásico</option>
+<option>Bifásico</option>
+<option>Trifásico</option>
+</select>
+</div>
+</div>
+</div>
+
+<div class="field-group">
+<h4>Disjuntor do Inversor</h4>
+<div class="field-row">
+<div>
+<label>Corrente (A)</label>
+<input type="number" id="disjuntor-inv-corrente" placeholder="Ex: 32">
+</div>
+<div>
+<label>Tipo</label>
+<select id="disjuntor-inv-tipo">
+<option>Monofásico</option>
+<option>Bifásico</option>
+<option>Trifásico</option>
+</select>
+</div>
+</div>
+</div>
+
+<button type="button" id="go-to-anexos">
+Avançar para Documentos →
+</button>
+
+</div>
+
+<div id="step-anexos" class="step-panel">
+
+<h3>Anexos</h3>
+
+<label>RG e CPF</label>
+<input type="file" id="anexo-rg-cpf" data-label="RG e CPF" multiple accept="image/*" capture="environment">
+
+<label>Conta de energia (geradora)</label>
+<input type="file" id="anexo-conta-geradora" data-label="Conta de Energia (Geradora)" multiple accept="image/*" capture="environment">
+
+<label>Conta de energia beneficiária (se houver)</label>
+<input type="file" id="anexo-conta-beneficiaria" data-label="Conta de Energia Beneficiária (se houver)" multiple accept="image/*" capture="environment">
+
+<label>Documento do imóvel</label>
+<input type="file" id="anexo-doc-imovel" data-label="Documento do Imóvel" multiple accept="image/*" capture="environment">
+
+<div class="step-actions">
+<button type="button" id="back-to-dados" class="btn-secondary">
+← Voltar
+</button>
+
+<button type="button" id="generate-pdf">
+Gerar PDF
+</button>
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+⚡ SOLARFLOW &mdash; PROJETOS QUE GERAM ENERGIA ⚡
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="app.js"></script>
+
+<script>
+if('serviceWorker' in navigator){
+
+navigator.serviceWorker.register('service-worker.js')
+
+let refreshing=false
+
+navigator.serviceWorker.addEventListener('controllerchange',()=>{
+
+if(refreshing)return
+
+refreshing=true
+
+window.location.reload()
+
+})
+
+}
+</script>
+
+</body>
+</html>
