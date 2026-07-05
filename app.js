@@ -317,7 +317,7 @@ let logo=null
 
 try{
 
-logo=await loadImageAsBase64("assets/logo.png")
+logo=await loadImageAsBase64("logo.png")
 
 }catch(err){
 
