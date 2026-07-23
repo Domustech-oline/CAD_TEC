@@ -39,6 +39,11 @@
 </div>
 </header>
 
+<nav id="app-nav" class="app-nav">
+<button type="button" id="nav-cadastro" class="nav-btn active">📋 Cadastro</button>
+<button type="button" id="nav-acompanhamento" class="nav-btn">📊 Acompanhamento</button>
+</nav>
+
 <main>
 
 <section id="login-screen" class="screen active">
@@ -83,11 +88,21 @@ required
 </div>
 </div>
 
+<div id="edit-banner" class="edit-banner" style="display:none">
+✏️ Editando cadastro de <strong id="edit-banner-name"></strong>
+<button type="button" id="cancel-edit-btn">Cancelar edição</button>
+</div>
+
 <form id="project-form">
 
 <div id="step-dados" class="step-panel active">
 
-<h3>Dados do Cliente</h3>
+<div class="accordion-section">
+<button type="button" class="accordion-toggle active" data-target="acc-cliente">
+<span>Dados do Cliente</span>
+<span class="accordion-icon">▾</span>
+</button>
+<div id="acc-cliente" class="accordion-content open">
 
 <label>Nome do cliente</label>
 <input id="cliente" required>
@@ -104,7 +119,15 @@ required
 <label>RG</label>
 <input id="rg">
 
-<h3>Equipamentos</h3>
+</div>
+</div>
+
+<div class="accordion-section">
+<button type="button" class="accordion-toggle" data-target="acc-equipamentos">
+<span>Equipamentos</span>
+<span class="accordion-icon">▾</span>
+</button>
+<div id="acc-equipamentos" class="accordion-content">
 
 <div class="field-group">
 <h4>Inversor</h4>
@@ -134,7 +157,15 @@ required
 </div>
 </div>
 
-<h3>Disjuntores</h3>
+</div>
+</div>
+
+<div class="accordion-section">
+<button type="button" class="accordion-toggle" data-target="acc-disjuntores">
+<span>Disjuntores</span>
+<span class="accordion-icon">▾</span>
+</button>
+<div id="acc-disjuntores" class="accordion-content">
 
 <div class="field-group">
 <h4>Disjuntor do PDE</h4>
@@ -169,6 +200,9 @@ required
 <option>Trifásico</option>
 </select>
 </div>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -212,11 +246,39 @@ Gerar PDF
 
 </section>
 
+<section id="acompanhamento-screen" class="screen">
+
+<div class="card">
+
+<div class="acomp-header">
+<h2>Acompanhamento</h2>
+<button type="button" id="gerar-banco-btn" class="btn-banco">🗄️ Gerar Banco de Dados</button>
+</div>
+
+<p id="acomp-status-msg" class="acomp-status-msg"></p>
+
+<div id="acomp-loading" class="acomp-loading" style="display:none">Carregando cadastros...</div>
+
+<div id="acomp-list" class="acomp-list"></div>
+
+<p id="acomp-empty" class="acomp-empty" style="display:none">Nenhum cadastro encontrado.</p>
+
+</div>
+
+</section>
+
 </main>
 
 <footer>
 ⚡ SOLARFLOW &mdash; PROJETOS QUE GERAM ENERGIA ⚡
 </footer>
+
+<div id="modal-overlay" class="modal-overlay">
+<div class="modal-box">
+<h3 id="modal-title">Título</h3>
+<div id="modal-body"></div>
+</div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
