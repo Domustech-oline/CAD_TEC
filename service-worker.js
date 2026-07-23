@@ -1,4 +1,4 @@
-const CACHE = "solarflow-cadtec-v5";
+const CACHE = "solarflow-cadtec-v7";
 
 const FILES = [
   "./",
